@@ -32,6 +32,7 @@ class Base {
 		$this->pageSize = Config::get('page.page_size', $this->pageSize);
 		$this->pageNum = Config::get('page.page_num', $this->pageNum);
 		$this->pageVar = Config::get('page.page_var', $this->pageVar);
+		$this->html = Config::get('page.page_html', $this->html);
 	}
 	/**
 	 * 分页设置
@@ -225,18 +226,21 @@ class Base {
 	 * @return string
 	 */
 	protected function getUrl($pageNum) {
-		$get = Request::get();		
-		$get[$this->pageVar] = '_page_';
+		$get = Request::get();
+		if ($pageNum > 1) {
+			$get[$this->pageVar] = $pageNum;
+		} elseif (isset($get[$this->pageVar])) {
+			unset($get[$this->pageVar]);
+		}
 		ksort($get);
-		$get = http_build_query($get);		
-		$param = str_replace('_page_', $pageNum, $get);	
+		$param = http_build_query($get);
 		$parse_url = Config::get('page.parse_url', ''); //获取url处理方法
 		if (is_callable($parse_url)) {			
 			$url = call_user_func_array($parse_url, [$param]);
 		} elseif ($_SERVER['QUERY_STRING']) {
 			$url = str_replace($_SERVER['QUERY_STRING'], '', $_SERVER['REQUEST_URI']).$param;
 		} else {
-			$url = $_SERVER['REQUEST_URI'].'?'.$param;			
+			$url = empty($param)? $_SERVER['REQUEST_URI'] : $_SERVER['REQUEST_URI'].'?'.$param;			
 		}
 		return $url;
 	}
