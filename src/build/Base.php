@@ -76,15 +76,15 @@ class Base {
 	 * @return string
 	 */
 	protected function getNowPageNum() {
-		$nowPage = max(1, Request::get($this->pageVar, 1, 'intval'));
-		return min($this->totalPage, $nowPage);
+		$nowPage = max(1, Request::get($this->pageVar, 1, 'intval'));		
+		return ($this->totalPage > 0)? min($this->totalPage, $nowPage) : $nowPage;
 	}
 	/**
 	 * 获取limit
 	 * @return string
 	 */
-	public function getLimit() {
-		$start = $this->pageSize * ($this->nowPageNum - 1);
+	public function getLimit() {	
+		$start = $this->pageSize * ($this->nowPageNum - 1);		
 		return $start.','.$this->pageSize;
 	}
 	/**
