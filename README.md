@@ -1,15 +1,16 @@
-# 分页处理
+#分页处理
 
 page组件用于数据分页智能处理显示
 
 #开始使用
 
 ####安装组件
-使用 composer 命令进行安装或下载源代码使用(依赖willphp/config组件)。
+
+使用 composer 命令进行安装或下载源代码使用，依赖(willphp/config)。
 
     composer require willphp/page
 
-> WillPHP 框架已经内置此组件，无需再安装。
+> WillPHP框架已经内置此组件，无需再安装。
 
 ####使用示例
 
@@ -22,8 +23,8 @@ page组件用于数据分页智能处理显示
 	'page_var' => 'p', //分页$_GET变量
 	'page_size' => 10, //每页显示数量
 	'page_num' => 5, //页面显示页码数量
-	'page_html' => '%home% %up% %pre% %numlinks% %next% %down% %end%', //显示的html
-	//'parse_url' => '\willphp\route\Route::pageUrl', //url处理函数或方法
+	'page_html' => '%home% %up% %pre% %numlinks% %next% %down% %end%', //显示的html	
+	'parse_url' => '', //(可选)url处理函数或方法
 
 ####分页设置
 
@@ -44,10 +45,7 @@ page组件用于数据分页智能处理显示
 	'header'=>'条记录', 
 	'unit'=>'页',
 	'theme'=>1 //1.默认显示，2.使用ul li方式显示
-
-显示设置：
-
-	$html = '[%total% %header%] [%nowpage%/%totalpage% %unit%] %home% %up% %pre% %numlinks% %next% %down% %end%';
+	'html' => '[%total% %header%] [%nowpage%/%totalpage% %unit%] %home% %up% %pre% %numlinks% %next% %down% %end%';
 
 ####获取limit
 
